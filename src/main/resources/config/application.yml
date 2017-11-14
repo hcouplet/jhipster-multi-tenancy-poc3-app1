@@ -23,6 +23,14 @@
 #                    thread:
 #                        timeoutInMilliseconds: 10000
 
+## See https://github.com/spring-cloud/spring-cloud-netflix/issues/1330
+#feign:
+#  hystrix:
+#    enabled: true
+#
+#hystrix:
+#  shareSecurityContext: true
+
 management:
     security:
         roles: ADMIN

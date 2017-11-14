@@ -1,10 +1,12 @@
 package eu.creativeone.config.oauth2;
 
 import eu.creativeone.security.oauth2.OAuth2SignatureVerifierClient;
+import eu.creativeone.tenancy.security.OAuth2AuthenticationTenant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.jwt.crypto.sign.SignatureVerifier;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 import java.util.Map;
@@ -77,4 +79,14 @@ public class OAuth2JwtAccessTokenConverter extends JwtAccessTokenConverter {
         }
         return false;
     }
+
+    @Override
+    public OAuth2Authentication extractAuthentication(Map<String, ?> map)
+    {
+        OAuth2Authentication authentication = super.extractAuthentication(map);
+        OAuth2AuthenticationTenant oAuth2AuthenticationTenant = new OAuth2AuthenticationTenant(authentication.getOAuth2Request(), authentication, map);
+        return oAuth2AuthenticationTenant;
+    }
+
 }
+
